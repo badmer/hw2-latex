@@ -1,0 +1,215 @@
+% ！TEX program = XeLatex
+%  UTF-8
+
+\documentclass[UTF8]{ctexart}
+\usepackage{color}
+\usepackage{xcolor}%定义了一些颜色  
+\usepackage{colortbl,booktabs}%第二个包定义了%%几个*rule  }
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{fancyhdr}
+
+\setmainfont{Times New Roman}
+%\setCJKmainfont{SimSun}
+%\setlength{\abovecaptionskip}{0pt}
+%\setlength{\belowcaptionskip}{10pt}
+\pagestyle{fancy}
+\fancyhead[L]{\footnotesize xx软件概要设计}
+\fancyhead[R]{\footnotesize 2018-8-31}
+
+\newcommand{\note}[1]{\textcolor{blue}{\emph{[#1]}}}   %定义蓝色斜体，自带[]的新命令，参数是说明。
+\newcommand{\pnote}[1]{\par{\textcolor{blue}{\emph{[#1]}}}}   %定义蓝色斜体，自带[]的新命令，参数是说明。自成一段。
+
+\title{xx软件概要设计}
+\author{作者：B3Group} 
+\date{August,31 2018}
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage%另起一页
+\setcounter{page}{1}
+\begin{center}
+ \vspace{20ex}
+ \par{\textbf{版权说明\\本文档的内容TCL公司所有，未经书面许可严禁以任何方式披露给第三方}}
+ \par{\textbf{Disclosure\\The information contained in this document is proprietary to TCL and shall
+      not to be disclosured by the recipient to third persons without the wriTCLn permission of TCL.}}
+ \vspace{2ex}
+ \par{\textbf{修改记录/REVISION HISTORY}}
+ \vspace{2ex}
+ \par{}
+ \begin{tabular}{|c|c|c|c|c|c|}
+   \hline
+    序号 & 变更（+/-）说明 & 作者 & 版本号 & 日期 & 批准 \\
+    \hline
+    0.1 & + 于xx模块新增xx功能 & author & 0.1 & 2018.8.31 &\\
+    \hline
+    2 & & & & &\\
+    \hline
+  \end{tabular}
+\end{center}
+ \newpage
+ \tableofcontents%命令输出论文目录
+ \newpage
+ \section{引言} %第一章
+   \subsection{背景}
+   \note{本文档的简要功能说明。}
+   \pnote{本文档适用于哪些人员、哪些项目、哪些领域等。}
+   \pnote{简要说明该产品的市场背景和主要特点。}
+    \subsection{产品信息}产品名称：
+     \par{产品型号:}
+    \subsection{软件名称}
+    \note{说明本文档对应的软件的正式名称和版本号，或各部分的文件名和版本号。}
+    \subsection{术语和缩略语} 
+    \note{对文中使用的术语和缩略语进行说明。}\\
+      \begin{tabular}{p{70pt} p{80pt} p{120pt} }
+       \hline
+       \hline
+       缩略语/术语 & 全称 & 说明\\  %表格第一行的内容,&表示格子间隔,\\结束本行
+       \hline
+       \\
+       \hline
+       \\
+       \hline
+       \\
+       \hline
+       \hline
+     \end{tabular}
+    \subsection{参考资料} 
+    \note{编写本文档时引用或参考的文档资料、有关标准等。}
+    \newpage
+    \section{总体设计}  %第二章
+    \subsection{需求规定} 
+    \note{说明对本系统的主要的输入输出项目、处理的功能性能要求。}
+    \subsection{设计约束}
+     \subsubsection{需求约束}
+     \subsubsection{隐含约束}
+    \subsection{运行环境}
+    \note{详细说明开发和调试/测试该软件所需的硬件环境和软件环境。}
+    \subsection{开发环境}   
+    \subsection{系统结构} %可使用uml图设计架构
+    \note{用一览表及框图的形式说明本系统的系统元素（各层模块、子程序、公用程序等）的划分，扼要说明每个系统元素的标识符和功能，分层次地给出各元素之间的关系（控制、顺序、信号传递等关系。）}
+    \subsection{功能实现与模块的关系} 
+    \note{用如下矩阵图说明各项功能需求的实现同各模块的分配关系：}\\
+	\vspace{3ex}
+   % \begin{table}  
+    %	\centering  
+    %\caption{彩色的表格}  
+    	\begin{tabular} 
+    		{>{\columncolor{blue}}r|c|c|c|c|c}  
+    		\toprule[1pt]  
+    		\rowcolor[gray]{0.9}    &模块1 &模块2  &模块3  &... &模块n\\  
+    		\midrule  
+    		%添加需求
+    		功能需求1  
+    		 & 318.3  &327.8  &152.0  &104.9  &135.8\\  
+    		\hline  
+    		功能需求2  &335.5    &137.7  &290.9  &1\\  
+    		\hline  
+    		功能需求3  &335.5    &137.7  &290.9  &198.6\\ 
+    		\hline  
+    		\bottomrule[1pt]  
+    	\end{tabular}  
+ %   \end{table}   
+    \subsection{模块开发方式说明}
+       \vspace{3ex}
+      	\begin{tabular} 
+    	{>{\columncolor{blue}}r|c|c|c|c|c}  
+    	\toprule[1pt]  
+    	\rowcolor[gray]{0.9}    &模块1 &模块2 &模块3  &...&模块n\\  
+    	\midrule  
+    	%添加需求
+    	开发方式 &318.3
+       &327.8  &152.0  &104.9  &135.8\\  
+    	\hline  
+    	\bottomrule[1pt]  
+    \end{tabular}  
+    \subsection{模块开发接口方式说明}
+%    \newpage
+    \section{接口设计}  %第三章
+    \subsection{外部接口}
+    \subsubsection{用户界面}
+    \note{说明软件的用户界面设计要求。}
+    \subsubsection{硬件接口}
+    \note{陈述软件产品与系统硬件设备之间每一个接口的逻辑特点。还可能包括如下事宜: 要支持什么样的设备，如何支持这些设备，如何约定等。}
+    \subsubsection{软件接口}
+    \note{说明本系统同外界的所有软件接口、本系统与各支持软件之间的接口关系。}
+    \subsubsection{通讯接口}
+    \note{说明各种通讯接口。例如串口协议、局部网络协议等。}
+    \subsubsection{内部接口}
+    \note{说明软件内部各模块之间主要的信息交换或控制接口以及这些接口的作用。}
+%    \newpage
+    
+    \section{运行设计}%正常流程，重点处理流程，异常处理流程。
+    \note{说明软件的运行控制设计，包括有关中断结构、进程控制、执行顺序、程序状态转换等的设计思想，并说明采用这些设计思想的原因。对于实时处理系统或交互系统来说，该部分的设计思想非常重要。}
+%    \newpage
+    \section{属性设计}
+    \subsection{性能}
+    \note{说明对于该产品的性能要求，如：开机时间、升级时间、应用启动时间、换台时间、遥控器和前面板按键的响应速度等。}
+    \subsection{可靠性}
+    \note{软件的可靠性指在硬件稳定的条件下，经过长时间运行和各种误操作输入（不含硬件误操作）情况下的稳定程度，其中主要包括故障处理能力、边界值处理能力和误操作屏蔽能力等。说明设计中保证可靠性的设计方案。}
+    \subsection{安全性}
+    \note{这里指的是保护软件的要素，以防止各种非法的访问、使用，修改、破坏或者泄密等。]包括数据安全性和网络安全性等。}
+    \subsection{可维护性}
+    \note{说明为了系统维护的方便而在程序内部设计中作出的安排，包括在程序中专门安排用于系统的检查与维护的检测点和专用模块。可维护性包括可移植性、可修改性、可扩充性等。可移植性是指在不同的硬件或软件平台上移植的方便程度；可修改性指软件的可读程度和软件出现问题时修改的方便性；可扩充性指软件对外接口和内部功能扩展的灵活性。说明保证软件可维护性的设计措施。}
+    
+%    \newpage
+    \section{逻辑数据结构}
+    \subsection{逻辑结构设计要点}
+    \note{包括常规的数据结构、被封装的数据结构（对象）和数据库（如果有的话）。}
+    \subsection{数据结构与模块的关系}
+    \note{采用表格说明上述数据结构与主要软件模块之间的关系。软件模块与这些数据结构的关系包括创建（Create），更新（Update），读出（Read）和发消息（Send Message）等。}
+    
+%    \newpage
+    \section{物理数据结构}
+    \note{描述FLASHROM的地址分配}
+    \subsection{FLASHROM的分配}
+    \subsection{RAM的分配}
+    \subsection{NVROM的分配}
+    \subsection{IC卡的地址分配[根据项目可选]}
+    
+    \newpage
+    \section{系统出错处理}
+    \note{用一览表的方式说明每种可能的出错或故障情况出现时，系统输出信息的形式、含意及对这些情况的处理设计。可能出现的出错类别包括接收到错误数据、硬件出现故障和程序进入非正常状态等情况。}
+%    \newpage
+    \section{系统调试与测试方法}
+		\subsection{调试方法}
+		\note{简要说明软件开发过程中的基本调试方法。}
+		\subsection{测试方法}
+		\note{简要说明软件基本成形后对其进行测试的基本方法。}
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
