@@ -1,0 +1,321 @@
+% ！TEX program = XeLatex
+%  UTF-8
+
+\documentclass[UTF8]{ctexart}
+\usepackage{color}
+\usepackage{xcolor}%定义了一些颜色  
+\usepackage{colortbl,booktabs}%第二个包定义了%%几个*rule  }
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepgflibrary{arrows} % for pgf-umlsd
+\usepackage{verbatim}
+
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+\pagestyle{fancy}
+\fancyhead[L]{\footnotesize 终端管理系统概要设计}
+\fancyhead[R]{\footnotesize 2018-8-31}
+
+%以下为说明内容命令，在实际编写样例时应注释掉。
+\newcommand{\note}[1]{\textcolor{blue}{\emph{[#1]}}}   %定义蓝色斜体，自带[]的新命令，参数是说明。
+\newcommand{\pnote}[1]{\par{\textcolor{blue}{\emph{[#1]}}}}   %定义蓝色斜体，自带[]的新命令，参数是说明。自成一段。
+
+\title{终端管理系统软件概要设计}
+\author{作者：B3Group} 
+\date{August,31 2018}
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage%另起一页
+\setcounter{page}{1}
+\begin{center}
+ \vspace{20ex}
+ \par{\textbf{版权说明\\本文档的内容TCL公司所有，未经书面许可严禁以任何方式披露给第三方}}
+ \par{\textbf{Disclosure\\The information contained in this document is proprietary to TCL and shall
+      not to be disclosured by the recipient to third persons without the wriTCLn permission of TCL.}}
+ \vspace{2ex}
+ \par{\textbf{修改记录/REVISION HISTORY}}
+ \vspace{2ex}
+ \par{}
+ \begin{tabular}{|c|c|c|c|c|c|}
+   \hline
+    序号 & 变更（+/-）说明 & 作者 & 版本号 & 日期 & 批准 \\
+    \hline
+    1 & + 初稿 & B3Group & 0.1 & 2018.8.31 &\\
+    \hline
+  \end{tabular}
+\end{center}
+ \newpage
+ \tableofcontents%命令输出论文目录
+ 
+ \newpage
+ \section{引言} %第一章
+   \subsection{背景}
+%   \note{本文档的简要功能说明。}
+%   \pnote{本文档适用于哪些人员、哪些项目、哪些领域等。}
+%   \pnote{简要说明该产品的市场背景和主要特点。}
+	\par{本文档为终端管理系统的概要设计，主要内容包括终端管理系统的需求功能分析以及主要的接口功能的设计。重点描述了该系统的主要功能，包括操作模式设置，数据读取以及安全备份等内容。用于目前的终端管理系统的后续设计，适合终端管理系统开发人员以及相应的项目管理人员查看。}
+    \subsection{产品信息}产品名称：终端管理系统
+     \par{产品型号:}1.0
+    \subsection{软件名称}
+%    \note{说明本文档对应的软件的正式名称和版本号，或各部分的文件名和版本号。}
+    \par{终端管理系统v0.1}
+    \subsection{术语和缩略语} 
+%    \note{对文中使用的术语和缩略语进行说明。}\\
+      \begin{tabular}{p{70pt} p{80pt} p{120pt} }
+       \hline
+       \hline
+       缩略语/术语 & 全称 & 说明\\  %表格第一行的内容,&表示格子间隔,\\结束本行
+       \hline
+       \\
+       tcli & - & 自主研发可支持linux命令的软件\\
+       \hline
+       GMS & google mobile service & 谷歌移动服务
+       \\
+       \hline
+       \hline
+     \end{tabular}
+    \subsection{参考资料} 
+%   \note{编写本文档时引用或参考的文档资料、有关标准等。}
+	 \par{终端管理系统需求管理矩阵V15}
+	 
+    \newpage
+    \section{总体设计}  %第二章
+    \subsection{系统需求}
+%    \note{用例图}
+    \par{*认证注册功能，主要包括首次开机认证注册以及PushService服务触发，需要把相应的数据上传给服务器。}
+    \par{*读写数据功能，主要包括设置操作模式，读写硬件，软件以及外设信息等内容，主要操作对象包括内存，网络，系统以及存储设备等。}
+    \par{*其他功能，主要为系统能够进入安全模式以及Recover模式，需要注意加密连接以及不同模式下部分命令不可执行。}
+    
+        \begin{tikzpicture}
+    \draw [color=blue!50,->](1,1) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny +获取状态}(3,3) node[right]{\tiny$CPU$};
+    
+    \draw [color=blue!50,->](1,0.75) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny+获取状态}(3,2.5) node[right]{\tiny$RAM$};
+    
+    \draw [color=blue!50,->](1,0.5) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny+获取状态}(3,2) node[right]{\tiny$Network$};
+    
+    \draw [color=blue!50,->](1.,0.25) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny+获取信息}(3,1.5) node[right]{\tiny$Memory$};
+    
+    \draw [color=blue!50,->](1,0) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny+获取信息}(3,0) node[right]{\tiny$Screen$};
+        
+    \draw [color=blue!50,->](1,-0.25) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny+获取信息}(3,-1.5) node[right]{\tiny$Outside$};
+            
+            
+    \draw [color=blue!50,->](1,-0.5) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny+获取信息}(3,-2.5) node[right]{\tiny$Software$};
+    
+    \draw [color=blue!50,->](-3,3) node[left]{\tiny$Actor1$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny+认证注册}(-1,1) node[right]{\tiny$$};
+    
+ 
+    
+    \draw [color=blue!50,->](-3,0) node[left]{\tiny$Actor2$}-- node [color=red!70,pos=0.15,above,sloped]{\tiny+读写数据}(-1,0) node[right]{\tiny$$};
+    
+   
+    
+    \draw [color=blue!50,->](-3,-2.5) node[left]{\tiny$Actor3$}-- node [color=red!70,pos=0.15,above,sloped]{\tiny+模式设置}(-1,-0.5) node[right]{\tiny$$};
+    
+    
+    \draw (0,0) ellipse (20pt and 10pt);       %画一个中心在原点，长轴、短轴分别为20pt和10pt的椭圆；
+
+   \draw (-3.75,3) ellipse (20pt and 10pt);
+   \draw (-3.75,0) ellipse (20pt and 10pt);
+   \draw (-3.75,-2.5) ellipse (20pt and 10pt);
+    \draw (3.75,0) ellipse (20pt and 5pt); 
+    \draw (3.75,1.5) ellipse (20pt and 5pt); 
+    \draw (3.75,3)ellipse (20pt and 5pt); 
+    \draw (3.75,-1.5) ellipse (20pt and 5pt); 
+    \draw (3.75,-2.5) ellipse (20pt and 5pt); 
+    \draw (3.75,2.5) ellipse (20pt and 5pt); 
+    \draw (3.75,2) ellipse (25pt and 5pt);
+    \node (n1) at (0, 0){\tiny 云端};
+    \draw (-1,-1) rectangle (1,1);
+    \node (n2) at (0, 0.5){\tiny Terminal Manager};
+    \end{tikzpicture}
+    
+    \subsection{需求规定} 
+%    \note{说明对本系统的主要的输入输出项目、处理的功能性能要求。}
+    \par{本系统输入主要为linux相关或类似命令，在网速良好的条件下，终端接受命令并作出相应的时间不应过慢，且在回传数据或是回传终端画面时，响应延迟不得超过规定的时间。}
+    \subsection{设计约束}
+     \subsubsection{需求约束}
+     \par{不得对现有架构做过大的调整，在已有架构的基础上主要针对命令延迟执行以及后台页面的稳定性方面进行优化。}
+     \subsubsection{隐含约束}
+     \par{对现有的命令集以及功能不做过多调整，但应预留未来可能新增命令的接口，以保证系统的功能可拓展性。} 
+    \subsection{系统结构} %可使用uml图设计架构  
+    \par{终端管理系统主要架构分为三部分，远程的若干个终端通过服务器上报给我们的本地系统，我们可以通过终端系统由服务器下发命令，对终端进行读写数据、切换模式等操作。}\\
+%    \note{用一览表及框图的形式说明本系统的系统元素（各层模块、子程序、公用程序等）的划分，扼要说明每个系统元素的标识符和功能，分层次地给出各元素之间的关系（控制、顺序、信号传递等关系。）}  
+	 \begin{center}
+    \begin{tikzpicture}
+    \draw (-5,4) -- (5,4);
+    \draw (5,4) -- (5,-4);
+    \draw (5,-4) -- (-5,-4);
+    \draw (-5,-4) -- (-5,4);
+    \draw (-1,3) -- (1,3);
+    \draw (1,3) -- (1,-3);
+    \draw (1,-3) -- (-1,-3);
+     \draw (-1,-3) -- (-1,3);
+    \node (n1) at (0, 0){\tiny Sever};
+    
+   \draw (-4,2) -- (-2,2);
+  \draw (-2,2) -- (-2,-2);
+  \draw (-4,-2) -- (-2,-2);
+  \draw (-4,-2) -- (-4,2); 
+    
+     \draw (4,2) -- (2,2);
+    \draw (2,2) -- (2,-2);
+    \draw (4,-2) -- (2,-2);
+    \draw (4,-2) -- (4,2); 
+    
+  \draw (-3.5,1.5) rectangle (-2.5,0.5);    
+  \draw (-3.5,-1.5) rectangle (-2.5,-0.5);   
+  \draw (2,0) -- (4,0); 
+    
+    \draw [color=blue!50,->](1,0.2) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny }(2,0.2) node[right]{\tiny$$};
+    
+    \draw [color=blue!50,->](2,-0.2) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny }(1,-0.2) node[right]{\tiny$$};
+
+    
+     \draw [color=blue!50,->](-1,0.2) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny }(-2,0.2) node[right]{\tiny$$};
+   
+   \draw [color=blue!50,->](-2,-0.2) node[left]{$$}-- node [color=red!70,pos=0.5,above,sloped]{\tiny}(-1,-0.2) node[right]{\tiny$$};
+   
+   \node (n1) at (-3,0.25){\tiny Terminal-1};
+   \node (n1) at (-3,-1.75 ){\tiny Terminal-2};
+
+   \node (n1) at (3,0.25){\tiny Data};
+   \node (n1) at (3,-1.75 ){\tiny Web};
+   
+   \node (n1) at (0,-3.5 ){ Terminal manager};
+    \end{tikzpicture}
+	 \end{center}
+    \subsection{功能实现与模块的关系} 
+%    \note{用如下矩阵图说明各项功能需求的实现同各模块的分配关系：}\\
+	\vspace{3ex}
+   % \begin{table}  
+    %	\centering  
+    %\caption{彩色的表格} 
+    \begin{center} 
+    	\begin{tabular} 
+    		{>{\columncolor{blue}}r|c|c|c|c}  
+    		\toprule[1pt]  
+    		\rowcolor[gray]{0.9}    &模式管理 &数据IO处理  &命令集&读写硬件模块 \\  
+    		\midrule  
+    		设置操作模式  				& √ &  & √  \\  
+    		\hline  
+    		读写数据    			   &   &√ & √  & √ \\  
+    		\hline  
+    		进入安全以及Recover模式  &  √ &  & √     \\ 
+    		\hline  
+    		\bottomrule[1pt]  
+    	\end{tabular}  
+    \end{center} 
+ %   \end{table}
+    
+    \newpage
+    \section{接口设计}  %第三章
+    \subsection{外部接口}
+    \subsubsection{用户界面}
+%    \note{说明软件的用户界面设计要求。}
+	 \par{用户界面主要分为三部分，最上部分的搜索栏以便于搜索目的终端设备从而能够进行连接，左侧的可选操作分类，点开该分类包含不同种类的的操作指令类以及操作接口，主要版图为第三部分即内容显示，这部分主要用于显示输入命令，相应操作，以及显示从终端设备返回的相关信息。}
+    \subsubsection{软件接口}
+%    \note{说明本系统同外界的所有软件接口、本系统与各支持软件之间的接口关系。}
+    \par{本系统兼容linux命令以及部分自定义命令，上层使用web端与系统用户进行交互。}
+    \subsubsection{通讯接口}
+%    \note{说明各种通讯接口。例如串口协议、局部网络协议等。}
+	 \par{传输使用https协议，将web端命令发出去，经由服务器，转发至相应的终端。服务器目前使用由深圳政府提供的服务器。在获取外设信息时使用串口打印出相应的设备信息，然后由广域网再次发送出去。}
+    \subsubsection{内部接口}
+%    \note{说明软件内部各模块之间主要的信息交换或控制接口以及这些接口的作用。}
+	  \par{软件系统由web端输入操作命令，将命令转发至终端，由终端解析命令并执行相应操作。}
+	  
+	 \newpage
+    \section{运行设计}%正常流程，重点处理流程，异常处理流程。
+%    \note{说明软件的运行控制设计，包括有关中断结构、进程控制、执行顺序、程序状态转换等的设计思想，并说明采用这些设计思想的原因。对于实时处理系统或交互系统来说，该部分的设计思想非常重要。}
+	 \par{理想的软件设置操作模式读取数据流程：服务端在发送命令后，经由服务器转发至终端，终端解析命令并执行相应的操作进行指定数据的读取，在准备好数据后终端将信息上报终端管理服务器。支持在下发可执行程序中读取，并将结果返回给可执行程序支持在tcli中读取，读取结果直接打印到终端在此情况下，不将结果上报到终端管理服务器，但可通过额外的接口/tcli命令实现返回给服务器。}
+	 \par{由于该系统中功能分支较多，以微信登陆系统并查询某特定终端为例，具体流程如下。WEB端登陆系统，需要由微信授权登陆，待服务验证成功后授权登入系统，再由web系统输入终端ID，即可得到相应的终端信息。}\\
+	 	\begin{center}
+		\centering
+		\begin{sequencediagram}
+			\newthread{ss}{\tiny WEB端}{SimulationServer}
+			\newinst{ctr}{\tiny 微信服务器}{SimControlNode}
+			\newinst{ps}{\tiny TV终端}{PhysicsServer}
+			\newinst[1]{sense}{\tiny 云服务器}{SenseServer}
+			%right
+			\begin{call}{ss}{Initialize()}{sense}{}
+			\end{call}
+		%	\begin{sdloop}{Run Loop}
+				\begin{call}{ss}{扫码登陆()}{ctr}{}
+				\begin{call}{ctr}{验证邮箱及URL跳转}{sense}{}
+					\end{call}
+				\end{call}
+			
+				
+				\begin{call}{ss}{输入ID/输入/Dnumber}{sense}{}
+				\begin{call}{sense}{读取ID/Dnumber}{ps}{}		
+			\end{call}
+		\end{call}
+				
+		%	\end{sdloop}
+		\end{sequencediagram}
+		\end{center}
+		
+    \newpage
+    \section{属性设计}
+    \subsection{性能}
+%    \note{说明对于该产品的性能要求，如：开机时间、升级时间、应用启动时间、换台时间、遥控器和前面板按键的响应速度等。}
+    \par{系统性能方面主要包括终端响应延迟时间、命令输入系统处理时长、系统返回终端信息时长内容，具体请见相关文档。}
+    \subsection{可靠性}
+%    \note{软件的可靠性指在硬件稳定的条件下，经过长时间运行和各种误操作输入（不含硬件误操作）情况下的稳定程度，其中主要包括故障处理能力、边界值处理能力和误操作屏蔽能力等。说明设计中保证可靠性的设计方案。}
+	 \par{由于需要处理较多数量终端的相关信息，系统为可靠性需要有一定的保证。在进行大批量的数据操作处理时，其所规定的延迟范围具体请见相关文档。在web端进行误操作时，要求系统能够提示错误或者忽略操作，在系统进入休眠状态时，需要由直接的连接能够跳出界面。}
+    \subsection{安全性}
+%    \note{这里指的是保护软件的要素，以防止各种非法的访问、使用，修改、破坏或者泄密等。包括数据安全性和网络安全性等。}
+    \par{系统安全性主要由三部分策略保证，即加密链接访问、传输过程中数据加密以及权限设置，从而保证了网络连接安全，数据传输安全以及终端设备的内部数据安全。加密连接使得连接不易被破坏，并采用私有服务器，避免了非法访问等。传输过程中数据加密，避免明文传输，在终端内部存在权限级别，较低权限未经授权不可访问高级权限所持有的数据，从而避免系统受到源自终端的攻击。}
+
+    
+    \newpage
+    \section{系统调试与测试方法}
+		\subsection{调试方法}
+%		\note{简要说明软件开发过程中的基本调试方法。}
+		\par{在软件开发过程中，每完善一个功能后即进行单元测试，验证功能是否完备与稳定，需要注意网络延迟情况以及web页面停留时间，若页面停留时间过长可能会失去连接从而对测试结果产生影响。遇到有耦合程度较高的模块，除了进行基本的单元测试，还应该注重模块单元对输入量较多、输入时间较小的情况下响应情况。}
+		\subsection{测试方法}
+%		\note{简要说明软件基本成形后对其进行测试的基本方法。}
+		\par{在软件基本成型后，测试主要需要关注系统功能完备、系统响应延迟情况、以及系统可靠性三个方面。同样需要注意网络延迟状况和链接超时的情况。系统功能完备主要针对认证注册、数据读取以及模式切换等方面进行功能等效类测试，测试对象包括网络、终端内部硬件、终端外设（音响、遥控器）以及终端显示和回显功能。系统响应方面，设置输入规模不一，时间间隔不一的测试用例，对系统响应的快慢做一个基本评判。在系统可靠性方面，测试是否系统会失去连接、丢失数据、误操作以及系统是否易用等内容。}
+\end{document} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
